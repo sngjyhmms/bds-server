@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>마크 서버 자동 접속</title>
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.location.href = "minecraft://?addExternalServer=BDS-Server|jyhmms.duckdns.org:19132";
+            }, 500);
+        };
+    </script>
+</head>
+<body style="text-align: center; font-family: sans-serif; padding-top: 100px; background-color: #1e1e1e; color: #ffffff;">
+    <h2>마인크래프트 서버 자동 등록</h2>
+    <p>잠시 후 마인크래프트가 자동으로 켜지며 서버가 등록됩니다.</p>
+    <p>만약 반응이 없다면 아래 버튼을 직접 눌러주세요.</p>
+    <br>
+    <a href="minecraft://?addExternalServer=BDS-Server|jyhmms.duckdns.org:19132" 
+       style="display: inline-block; padding: 15px 30px; background-color: #5c8a34; color: white; text-decoration: none; font-weight: bold; border-radius: 5px;">
+       서버 등록하고 마크 켜기
+    </a>
+</body>
+</html>
