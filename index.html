@@ -4,18 +4,49 @@
     <meta charset="UTF-8">
     <title>지미 힐링 야생 서버 등록</title>
     <script>
+        // 💡 나중에 IP나 서버 이름이 바뀌면 여기만 수정하세요!
+        const serverName = "지미서버";
+        const serverIp = "61.254.205.186:19132";
+        
+        // 한글과 특수기호(|)가 유실되지 않도록 안전하게 인코딩 (URI 파편화 방지)
+        const safeParam = encodeURIComponent(serverName + "|" + serverIp);
+        const deepLink = "minecraft://?addExternalServer=" + safeParam;
+
         window.onload = function() {
+            // 수동 클릭 버튼의 링크에도 인코딩된 안전한 주소 적용
+            document.getElementById('manual-link').href = deepLink;
+            
+            // 0.5초 뒤 딥링크 자동 실행
             setTimeout(function() {
-                window.location.href = "minecraft://?addExternalServer=지미서버|61.254.205.186:19132";
+                window.location.href = deepLink;
             }, 500);
         };
+
+        // 인앱 브라우저 등에서 딥링크가 막혔을 때를 위한 복사 기능
+        function copyIp() {
+            navigator.clipboard.writeText(serverIp).then(() => {
+                alert("서버 주소(" + serverIp + ")가 복사되었습니다!\n마인크래프트 서버 탭에서 직접 추가해 보세요.");
+            }).catch(() => {
+                alert("복사에 실패했습니다. 직접 입력해 주세요: " + serverIp);
+            });
+        }
     </script>
 </head>
 <body style="text-align: center; font-family: sans-serif; padding-top: 100px; background-color: #1e1e1e; color: #ffffff;">
     <h2>지미 힐링 야생 서버 등록</h2>
     <p>잠시 후 마인크래프트가 켜지며 서버가 등록됩니다.</p>
     <p>만약 반응이 없다면 아래 버튼을 직접 눌러주세요.</p>
+    
     <br>
-    <a href="minecraft://?addExternalServer=지미서버|61.254.205.186:19132" style="display: inline-block; padding: 15px 30px; background-color: #5c8a34; color: white; text-decoration: none; font-weight: bold; border-radius: 5px;">서버 등록하고 마크 켜기</a>
+    
+    <a id="manual-link" href="#" style="display: inline-block; padding: 15px 30px; background-color: #5c8a34; color: white; text-decoration: none; font-weight: bold; border-radius: 5px; margin-bottom: 15px;">
+        서버 등록하고 마크 켜기
+    </a>
+    
+    <br>
+    
+    <button onclick="copyIp()" style="padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; border-radius: 5px; cursor: pointer; font-size: 14px;">
+        화면이 안 넘어가나요? 서버 주소 복사하기
+    </button>
 </body>
 </html>
