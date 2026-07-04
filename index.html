@@ -2,27 +2,42 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>지미 힐링 야생 서버 등록</title>
+    <title>지미 힐링 야생 서버</title>
     <script>
-        // 💡 나중에 IP나 서버 이름이 바뀌면 여기만 수정하세요!
         const serverName = "지미서버";
-        const serverIp = "61.254.205.186:19132";
+        const serverHost = "61.254.205.186";
+        const serverPort = "19132";
+        const serverIp = serverHost + ":" + serverPort;
         
-        // 한글과 특수기호(|)가 유실되지 않도록 안전하게 인코딩 (URI 파편화 방지)
+        // 1. 등록용 링크
         const safeParam = encodeURIComponent(serverName + "|" + serverIp);
-        const deepLink = "minecraft://?addExternalServer=" + safeParam;
+        const addLink = "minecraft://?addExternalServer=" + safeParam;
+
+        // 2. 바로 접속 링크
+        const connectLink = "minecraft://connect/?serverUrl=" + serverHost + "&serverPort=" + serverPort;
 
         window.onload = function() {
-            // 수동 클릭 버튼의 링크에도 인코딩된 안전한 주소 적용
-            document.getElementById('manual-link').href = deepLink;
+            // 각 버튼에 링크 연결
+            document.getElementById('btn-connect').href = connectLink;
+            document.getElementById('btn-add').href = addLink;
             
-            // 0.5초 뒤 딥링크 자동 실행
-            setTimeout(function() {
-                window.location.href = deepLink;
-            }, 500);
+            // 💡 10초 카운트다운 후 '자동 접속' 실행
+            let timeLeft = 10;
+            const timerText = document.getElementById('timer-text');
+            
+            const timer = setInterval(function() {
+                timeLeft--;
+                if (timeLeft > 0) {
+                    timerText.innerText = timeLeft + "초 후 서버에 자동 접속됩니다.";
+                } else {
+                    clearInterval(timer);
+                    timerText.innerText = "마인크래프트를 실행하여 서버에 접속하는 중입니다...";
+                    // 자동 이동은 접속(connectLink)으로 처리
+                    window.location.href = connectLink; 
+                }
+            }, 1000); // 1초마다 갱신 (총 10초)
         };
 
-        // 인앱 브라우저 등에서 딥링크가 막혔을 때를 위한 복사 기능
         function copyIp() {
             navigator.clipboard.writeText(serverIp).then(() => {
                 alert("서버 주소(" + serverIp + ")가 복사되었습니다!\n마인크래프트 서버 탭에서 직접 추가해 보세요.");
@@ -31,22 +46,27 @@
             });
         }
     </script>
+    <style>
+        body { text-align: center; font-family: sans-serif; padding-top: 100px; background-color: #1e1e1e; color: #ffffff; }
+        .btn { display: inline-block; padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; margin: 10px; font-size: 16px; }
+        .btn-blue { background-color: #2196F3; color: white; }
+        .btn-green { background-color: #5c8a34; color: white; }
+        .btn-gray { background-color: #444; color: white; border: 1px solid #666; cursor: pointer; font-size: 14px; padding: 12px 24px; border-radius: 5px; }
+    </style>
 </head>
-<body style="text-align: center; font-family: sans-serif; padding-top: 100px; background-color: #1e1e1e; color: #ffffff;">
-    <h2>지미 힐링 야생 서버 등록</h2>
-    <p>잠시 후 마인크래프트가 켜지며 서버가 등록됩니다.</p>
-    <p>만약 반응이 없다면 아래 버튼을 직접 눌러주세요.</p>
+<body>
+    <h2>지미 힐링 야생 서버</h2>
     
-    <br>
+    <p id="timer-text" style="font-size: 18px; font-weight: bold; color: #ffeb3b;">10초 후 서버에 자동 접속됩니다.</p>
+    <p style="margin-bottom: 30px; color: #aaaaaa;">아래 버튼중 하나를 선택하세요.</p>
     
-    <a id="manual-link" href="#" style="display: inline-block; padding: 15px 30px; background-color: #5c8a34; color: white; text-decoration: none; font-weight: bold; border-radius: 5px; margin-bottom: 15px;">
-        서버 등록하고 마크 켜기
-    </a>
+    <div>
+        <a id="btn-connect" href="#" class="btn btn-blue"> 즉시 접속하기</a>
+        <a id="btn-add" href="#" class="btn btn-green"> 서버 목록에 등록하기</a>
+    </div>
     
-    <br>
-    
-    <button onclick="copyIp()" style="padding: 10px 20px; background-color: #444; color: white; border: 1px solid #666; border-radius: 5px; cursor: pointer; font-size: 14px;">
-        화면이 안 넘어가나요? 서버 주소 복사하기
-    </button>
+    <div style="margin-top: 40px;">
+        <button onclick="copyIp()" class="btn-gray"> 서버 주소 복사하기</button>
+    </div>
 </body>
 </html>
