@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>지미 힐링 야생 서버</title>
+    <title>모엔월드</title>
     <script>
-        const serverName = "지미서버";
+        const serverName = "모엔월드";
         const serverHost = "61.254.205.186";
         const serverPort = "19132";
         const serverIp = serverHost + ":" + serverPort;
@@ -28,10 +28,10 @@
             const timer = setInterval(function() {
                 timeLeft--;
                 if (timeLeft > 0) {
-                    timerText.innerText = timeLeft + "초 후 서버에 자동 접속됩니다.";
+                    timerText.innerText = timeLeft + "초 후 모엔월드에 자동 접속됩니다.";
                 } else {
                     clearInterval(timer);
-                    timerText.innerText = "마인크래프트를 실행하여 서버에 접속하는 중입니다...";
+                    timerText.innerText = "마인크래프트를 실행하여 월드에 접속하는 중입니다...";
                     // 자동 이동은 접속(connectLink)으로 처리
                     window.location.href = connectLink; 
                 }
@@ -40,7 +40,7 @@
 
         function copyIp() {
             navigator.clipboard.writeText(serverIp).then(() => {
-                alert("서버 주소(" + serverIp + ")가 복사되었습니다!\n마인크래프트 서버 탭에서 직접 추가해 보세요.");
+                alert("서버 주소(" + serverIp + ")가 복사되었습니다!\n마인크래프트 서버 탭에서 직접 추가해 보세요.포트:19132");
             }).catch(() => {
                 alert("복사에 실패했습니다. 직접 입력해 주세요: " + serverIp);
             });
